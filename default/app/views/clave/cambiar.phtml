@@ -1,0 +1,85 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="usuario">Usuario</label>
+                              <div class="col-md-3">
+                              <?php echo Form::text('usuario.login', 'class="form-control" disabled',Session::get('login')) ?>
+                              </div>
+                            </div>
+                            <?php echo TwForm::groupPassword('usuario.password', 'col-md-4', 'Contraseña', True, False, True, NULL); ?>
+
+                            <?php echo TwForm::groupPassword('usuario.repassword', 'col-md-4', 'Reingrese Contraseña', True, True, True, NULL); ?>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="crear"></label>
+                                <div class="col-md-8">
+                                    <button id="crear" name="crear" class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
+                                    <?php echo Html::link('dashboard/', '<i class="fa fa-times"></i> Cancelar', 'class="btn btn-danger"'); ?>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>
+        <script type="text/javascript">
+            var valid = true;
+
+            function validPassword(){
+                var pipe = $.Deferred();
+                var pass = $('#usuario_password').val();
+                var repass = $('#usuario_repassword').val();
+                var help = $('#usuario_repassword_help');
+                var arr = new Array('123456', '654321', $('#usuario_login').val());
+                help.removeClass('error success').html('');
+                if (repass.length >= 6){
+                     if ( arraySearch(arr, repass) ){
+                        help.removeClass('error success').addClass('error').html('Demasiado fácil');
+                        valid = valid && false;
+                    } else if ( repass == pass ){
+                        help.removeClass('error success').addClass('success').html('Correcto');
+                        valid = valid && true;
+                    } else {
+                        help.removeClass('error success').addClass('error').html('No coincide');
+                        valid = valid && false;
+                    }
+                } else {
+                    help.removeClass('error success').addClass('error').html('Demasiado corta');
+                    valid = valid && false;
+                }
+                return pipe.promise();
+            }
+
+
+
+            $('#usuario_repassword').on('keyup', function(){
+                validPassword();
+            });
+
+            $('#crear').on('click', function(e){
+                valid = true;
+
+                e.preventDefault();
+                validPassword();
+                setTimeout(function() {
+                    console.log(valid);
+                    if (valid) {
+                        $('form').submit();
+                    }
+                }, 100);
+            });
+        </script>
+
+

@@ -1,0 +1,15 @@
+<?php View::content(); ?>
+<legend>Bancos</legend>
+
+<?php echo Form::open();  ?>
+ 
+          <label class="col-md-4 control-label" for="bancos">bancos</label>  
+        <?php echo Form::text('bancos.bancos', 'class="form-control input-large" required') ?>
+          <label class="col-md-4 control-label" for="status">status</label>  
+        <?php echo Form::text('bancos.status', 'class="form-control input-md" required') ?></label>
+        <?php echo Form::submit('Agregar' , 'class="btn"') ?>
+ 
+<?php echo Form::close() ?>
+
+</div>
+

@@ -1,0 +1,16 @@
+
+<div class="container">
+
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+        <h4><?php echo ucfirst(Router::get('controller')); ?> | <small>Listar</small></h4>
+                <div class="pull-right">
+                    <?php if ($buscar): ?>
+                    <a href="#" class="btn btn-primary" id="buscar">
+                        <i class="fa fa-search"></i> Buscar
+                    </a>
+                    <?php endif; ?>
+                    <a href="#" class="btn btn-default" id="refrescar">
+                        <i class="fa fa-refresh"></i> Refrescar
+                    </a>
+                    <?php echo Html::link(Router::get('module').'/'.Router::get('controller').'/nuevo/', '<i class="fa fa-plus"></i> Nuevo', 'class="btn btn-success"'); ?>
+                </div>

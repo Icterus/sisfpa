@@ -1,0 +1,23 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="rubro">Rubro</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::hidden('rubro.id'); ?>
+                                    <?php echo Form::text('rubro.rubro', 'placeholder="Rubro" class="form-control mask-textonly capitalize" required="required" maxlength="50" autofocus') ?>
+                                </div>
+                            </div>
+
+                          <?php View::partial('botoneranuevo'); ?>
+                          
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <?php echo Tag::js('jquery.keyfilter'); ?> 

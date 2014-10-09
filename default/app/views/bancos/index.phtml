@@ -1,0 +1,35 @@
+
+				<?php View::partial('botonera', 604800, array('buscar'=>False)); ?>
+
+    			<?php View::content(); ?>
+
+                <p>&nbsp;</p>
+                <div class="col-md-11 col-md-offset-1">
+                <table class="table table-striped table-condensed grid">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Banco</th>
+                            <th class="text-center">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datos Cargados de manera asincrona -->
+                    </tbody>
+                </table>
+                <script id="items" type="text/x-jquery-tmpl">
+                        <tr>
+                            <td>${id}</td>
+                            <td>${bancos}</td>
+                            <td class="text-center">
+                                <?php echo Html::link(Router::get('controller').'/modificar/${id}', '<i class="fa fa-edit"></i> Editar', 'class="btn btn-primary" title="Modificar"'); ?>
+                                <?php echo Html::link(Router::get('controller').'/borrar/${id}/', '<i class="fa fa-trash-o"></i> Borrar', 'class="btn btn-danger" title="Borrar"'); ?>
+                            </td>
+                        </tr>
+                </script>
+
+
+                <?php echo Tag::js('utils'); ?>
+                <?php Utils::paginacion(Router::get('controller').'/', True, True, 6); ?>
+</div>
+</div>

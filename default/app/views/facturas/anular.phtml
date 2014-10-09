@@ -1,0 +1,119 @@
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Número de Factura :</label>
+
+                                <div class="col-md-3">
+                                    <?php echo Form::dbSelect('datos.ubicacion_id', 'prefijo', NULL, "-- Seleccione --", 'class="form-control" autocomplete="off" required'); ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('datos.factura', 'placeholder="Número de Factura" class="form-control mask-pnum" autocomplete="off" required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="crear"></label>
+                                <div class="col-md-8">
+                                    <button id="crear" name="crear" class="btn btn-primary"> <i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php if ($factura): ?>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend>Datos Factura</legend>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Factura :</label>
+
+                                <div class="col-md-2">
+                                    <?php echo Form::hidden('factura.id') . Form::text('factura.prefijo', 'class="form-control mask-pnum" autocomplete="off" readonly required') ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('factura.factura', 'class="form-control mask-pnum" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Creada :</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::text('factura.created_at', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Recaudador :</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::text('factura.nombre', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Cliente :</label>
+                                <div class="col-md-5">
+                                    <?php echo Form::text('factura.cliente', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Subtotal :</label>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('factura.subtotal', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Exento :</label>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('factura.exento', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">IVA :</label>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('factura.iva', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Total :</label>
+                                <div class="col-md-3">
+                                    <?php echo Form::text('factura.monto', 'class="form-control" autocomplete="off" readonly required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="crear"></label>
+                                <div class="col-md-8">
+                                    <?php if ($factura->estatus == 1): ?>
+                                    <button id="crear" name="crear" class="btn btn-danger"> <i class="fa fa-times"></i> Anular</button>
+                                    <?php endif; ?>
+                                    <?php echo Html::link('reportes/factura/'.$factura->id, '<i class="fa fa-print"></i> Reimprimir', ' class="btn btn-default" target="_blank"'); ?>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+<?php echo Tag::js('jquery.keyfilter'); ?>

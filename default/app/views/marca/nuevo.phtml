@@ -1,0 +1,24 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="marca_marca">Marca</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::hidden('marca.id'); ?>
+                                    <?php echo Form::text('marca.marca', 'placeholder="Marca" class="form-control mask-textonly capitalize" required="required" maxlength="20" autofocus') ?>
+                                </div>
+                            </div>
+
+                            <?php echo Form::hidden('marca.estatus', NULL, 1) ?>
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <?php echo Tag::js('jquery.keyfilter'); ?>

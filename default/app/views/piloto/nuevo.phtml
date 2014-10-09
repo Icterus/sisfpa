@@ -1,0 +1,85 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="nombres_apellidos">Nombres y Apellidos</label>
+                              <div class="col-md-6">
+                                <?php echo Form::hidden('piloto.id'); ?>
+                                <?php echo Form::text('piloto.nombre', 'class="form-control" placeholder="Nombre y Apellidos" required') ?>
+
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="documentos">Documento</label>
+
+                              <div class="col-md-2">
+                             <?php
+
+                                echo Form::select('piloto.tipo', array("V" => "V","E" => "E","P" => "P"), 'class="form-control " required') ?>
+                            </div>
+                            <div class="col-md-2">
+                             <?php echo Form::text('piloto.documento', 'class="form-control input-md" maxlength="12" placeholder="Documento" required') ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="permiso">Permiso</label>
+                              <div class="col-md-4">
+                                <?php echo Form::text('piloto.permiso', 'class="form-control" placeholder="Permiso" maxlength="11" required') ?>
+
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="telefono">Teléfono</label>
+                              <div class="col-md-4">
+                         <?php echo Form::text('piloto.telefono', 'class=" form-control mask-pint input-md"  placeholder="Nro Teléfono" maxlength="10"') ?>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                        <label class="col-md-4 control-label" for="celular">Celular</label>
+                                <div class="col-md-4">
+                                  <?php echo Form::text('piloto.celular', 'class="form-control mask-pint input-md" placeholder="Nro Celular" maxlength="10" ') ?>
+                                 </div>
+                             </div>
+
+
+                            <div class="form-group">
+                                     <label class="col-md-4 control-label" for="email">Email</label>
+                               <div class="col-md-6">
+                                   <?php echo Form::email('piloto.correo', 'class="form-control input-md mask-email" placeholder="Email"') ?>
+                               </div>
+                            </div>
+
+                            <div class="form-group">
+                                     <label class="col-md-4 control-label" for="direccion">Dirección</label>
+                                 <div class="col-md-8">
+                                    <?php echo Form::text('piloto.direccion', 'class="form-control input-md" placeholder="Dirección" required') ?>
+                               </div>
+                            </div>
+
+                            <?php echo Form::hidden('piloto.estatus', NULL, 1) ?>
+
+        <!-- Boton de Envio de Formulario -->
+
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+
+<?php echo Form::close() ?>
+
+                </div>
+            </div>
+        </div>
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>

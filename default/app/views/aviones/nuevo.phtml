@@ -1,0 +1,72 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="modelo">Modelo</label>
+                              <div class="col-md-3">
+                                <?php echo Form::hidden('avion.id'); ?>
+                                <?php echo Form::dbSelect('avion.modelo_id', 'modelo', NULL, 'Seleccione...', 'class="form-control" required="required"'); ?>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="estatus">Tipo de Avión</label>
+                              <div class="col-md-3">
+                                <?php echo Form::select('avion.tipo', array(''=>'Seleccione','N'=>'Nacional', 'I'=>'Internacional','G'=>'Gubernamental','P'=>'Privado'), 'class="form-control" required="required"'); ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="matricula">Matrícula</label>
+                                <div class="col-md-2">
+                                    <?php echo Form::dbSelect('avion.prefijo_id', 'prefijo', NULL, '--', 'class="form-control" required="required"'); ?>
+                                </div>
+                              <div class="col-md-2">
+                                    <?php echo Form::text('avion.matricula', 'class="form-control mask-alphanum upper" placeholder="Matrícula" required="required"') ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="peso">Peso</label>
+                              <div class="col-md-3">
+                                <div class="input-group">
+                                    <?php echo Form::text('avion.peso', 'class="form-control mask-num" placeholder="Peso" required="required" maxlength="6"') ?>
+                                  <span class="input-group-addon">Kgs.</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="capacidad">Capacidad</label>
+                              <div class="col-md-2">
+                                <?php echo Form::text('avion.capacidad', 'placeholder="Cap." class="form-control mask-pint" required="required" maxlength="4"') ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="basamento">Basado</label>
+                              <div class="col-md-2">
+                              <?php echo Form::check('avion.basamento','1',false) ?>
+                              </div>
+                            </div>
+                         <?php echo Form::hidden('avion.estatus', NULL, 1) ?>
+
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>

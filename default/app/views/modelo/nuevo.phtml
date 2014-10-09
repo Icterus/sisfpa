@@ -1,0 +1,33 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_marca">Marca</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::dbSelect('modelo.marca_id', 'marca', array('marca', 'listar'), 'Seleccione...', 'class="form-control" required="required" autofocus'); ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_modelo">Modelo</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::hidden('modelo.id'); ?>
+                                    <?php echo Form::text('modelo.modelo', 'placeholder="Modelo" class="form-control mask-prefix upper" required="required" maxlength="20" autofocus') ?>
+                                </div>
+                            </div>
+
+                            <?php echo Form::hidden('modelo.estatus', NULL, 1) ?>
+
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <?php echo Tag::js('jquery.keyfilter'); ?>
+            <?php echo Tag::js('utils'); ?>

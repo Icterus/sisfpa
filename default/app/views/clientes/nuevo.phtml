@@ -1,0 +1,146 @@
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="cliente">Cliente</label>
+                                <div class="col-md-6">
+                                    <?php echo Form::hidden('clientes.id'); ?>
+                                    <?php echo Form::text('clientes.cliente', 'class="form-control" placeholder="Nombre del Cliente" required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="rif">Tipo de Documento</label>
+                                <div class="col-md-4">
+                                    <?php
+                                    //Argumentos del Tipo de RIF
+                                    $arg = array("rif" => "RIF", "documento" => "Documento de Identidad");
+                                    echo Form::select('clientes.tipo_documento_rif', $arg, 'class="form-control " required') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="rif">
+                                <label class="col-md-4 control-label" for="rif">RIF</label>
+                                <div class="col-md-2">
+                                    <?php
+                                    //Argumentos del Tipo de RIF
+                                    $arg = array("J" => "J", "G" => "G","V" => "V","E" => "E");
+                                    echo Form::select('clientes.tipo_rif', $arg, 'class="form-control "') ?>
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo Form::text('clientes.rif', 'class="form-control input-md mask-pint" maxlength="8" placeholder="RIF"') ?>
+                                </div>
+                                <div class="col-md-1">
+                                    <?php echo Form::text('clientes.terminal_rif', 'class="form-control input-md mask-pint" maxlength="1"') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="documento">
+                                <label class="col-md-4 control-label" for="rif">Documento de Identidad</label>
+                                <div class="col-md-2">
+                                    <?php
+                                    $arg = array("V" => "V","E" => "E", "P" => "P");
+                                    echo Form::select('clientes.tipo_documento', $arg, 'class="form-control"') ?>
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo Form::text('clientes.documento', 'class="form-control input-md" maxlength="8" placeholder="Documento"') ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="telefono">Teléfono</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::text('clientes.telefono', 'class=" form-control mask-pint input-md"  placeholder="Nro Teléfono" maxlength="10"') ?>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="fax">FAX</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::text('clientes.fax', 'class="form-control mask-pint input-md" placeholder="Nro Fax" maxlength="10"') ?>
+                                 </div>
+                             </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="email">Email</label>
+                                <div class="col-md-6">
+                                    <?php echo Form::email('clientes.correo', 'class="form-control input-md mask-email" placeholder="Email"') ?>
+                               </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="direccion">Dirección</label>
+                                <div class="col-md-8">
+                                    <?php echo Form::text('clientes.direccion', 'class="form-control input-md" laceholder="Dirección" required') ?>
+                               </div>
+                            </div>
+
+<!--                             <div class="form-group">
+                                     <label class="col-md-4 control-label" for="direccion">Credito</label>
+                                 <div class="col-md-4">
+                                    <?php echo Form::dbSelect('clientes.credito_id', 'credito', NULL, 'Seleccione', 'class="form-control" required="required"'); ?>
+                               </div>
+                            </div>
+ -->
+                         <?php echo Form::hidden('clientes.estatus', NULL, 1) ?>
+
+
+        <!-- Boton de Envio de Formulario -->
+
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+
+<?php echo Form::close() ?>
+
+                </div>
+            </div>
+        </div>
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>
+        <script type="text/javascript">
+            <?php if ( empty($clientes->tipo_documento) ): ?>
+            required('rif');
+            $('#documento').hide();
+            <?php else: ?>
+            required('documento');
+            $('#rif').hide();
+            <?php endif; ?>
+            function required(value){
+                var divs = new Array('rif', 'documento');
+                divs.forEach(function(d) {
+                    if (value == d){
+                        print
+                        $('#'+d).show();
+                        $('#'+d).find('input').each(function () {
+                            $(this).attr('required', 'required');
+                        });
+                        $('#'+d).find('select').each(function () {
+                            $(this).attr('required', 'required');
+                        });
+                    } else {
+                        $('#'+d).hide();
+                        $('#'+d).find('input').each(function () {
+                            $(this).removeAttr('required');
+                            $(this).val('');
+                        });
+                        $('#'+d).find('select').each(function () {
+                            $(this).removeAttr('required');
+                        });
+                    }
+                });
+            }
+
+            $('#clientes_tipo_documento_rif').on('change', function(e){
+                var value = this.value;
+                required(value);
+            });
+        </script>

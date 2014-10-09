@@ -1,0 +1,91 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+           <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-bar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                    <a class="navbar-brand" href="#">
+                        <!-- <?php //echo Html::Img('logo_iaef.jpg','Logo');?> -->
+                        <i class="fa fa-globe"></i> <?php echo APP_NAME; ?></a>
+            </div>
+
+       <div class="navbar-collapse collapse" id="navigation-bar">
+             <ul class="navbar-nav nav">
+                <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-cogs resaltar"></i>
+                                Maestro
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                    <ul class="dropdown-menu">
+                        <li> <?php echo Html::link('aerolinea/', 'Aerolineas'); ?> </li>
+                        <li> <?php echo Html::link('aviones/', 'Aeronaves'); ?> </li>
+                        <li> <?php echo Html::link('clientes/', 'Clientes'); ?> </li>
+                        <li> <?php echo Html::link('prestadores/', 'Prestadores de Servicios'); ?> </li>
+                        <li> <?php echo Html::link('rutas/', 'Rutas'); ?> </li>
+                        <li> <?php echo Html::link('producto/', 'Productos'); ?> </li>
+                        <li> <?php echo Html::link('rubro/', 'Rubros'); ?> </li>
+                        <li> <?php echo Html::link('marca/', 'Marca'); ?> </li>
+                        <li> <?php echo Html::link('modelo/', 'Modelos'); ?> </li>
+                        <li> <?php echo Html::link('piloto/', 'Pilotos'); ?> </li>
+                        <li> <?php echo Html::link('rutas/aeropuertos', 'Nuevo Aeropuerto'); ?> </li>
+                    </ul>
+                </li>
+
+
+    <li>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-print resaltar"></i>
+            Administrativo
+            <i class="fa fa-caret-down"></i>
+        </a>
+         <ul class="dropdown-menu">
+            <li> <?php echo Html::link('reportes/cierre', 'Cierre de Caja'); ?> </li>
+            <?php if (Session::get('nivel') != 4): ?>
+            <li> <?php echo Html::link('facturas/anular', 'Anular Factura'); ?> </li>
+            <li> <?php echo Html::link('reportes/cuentas', 'Cuentas por Cobrar (Notas de Crédito)'); ?> </li>
+            <li> <?php echo Html::link('reportes/credito', 'Facturas a Crédito'); ?>
+                <li> <?php echo Html::link('reportes/credito_fbo', 'Facturas a Crédito (Prestadores/FBO)'); ?>
+            <li> <?php echo Html::link('reportes/ingresos', 'Relación de Ingresos'); ?> </li>
+            <li> <?php echo Html::link('reportes/consolidado', 'Consolidado de Ingresos'); ?></li>
+            <!-- <li> <?php echo Html::link('reportes/pasajeros', 'Reporte de Movimiento de Pasajeros'); ?></li> -->
+            <?php endif; ?>
+         </ul>
+    </li>
+    <?php if (Session::get('nivel') != 4): ?>
+    <li>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-wrench resaltar"></i>
+            Sistema
+            <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu">
+            <li> <?php echo Html::link('admin/configuracion', 'Configuración'); ?></li>
+            <li> <?php echo Html::link('admin/prefijo', 'Prefijo Aviones'); ?></li>
+            <li> <?php echo Html::link('admin/usuario', 'Usuarios'); ?></li>
+            <li> <?php echo Html::link('admin/mantenimiento', 'Mantenimieto'); ?> </li>
+        </ul>
+    <li>
+    <?php endif; ?>
+    </ul>
+
+        <ul class="navbar-nav nav pull-right">
+                <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user resaltar"></i>
+                                <?php echo Session::get('login'); ?>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                    <ul class="dropdown-menu">
+                          <li> <?php echo Html::link('clave/cambiar', 'Cambiar Clave'); ?> </li>
+                          <li><?php echo Html::link('salir/', '<i class="fa fa-power-off"></i> Salir'); ?></li>
+                    </ul>
+                </li>
+        </ul>
+     </div>
+   </div>
+</nav>
+

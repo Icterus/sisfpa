@@ -1,0 +1,102 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <h4>Procedencia</h4>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_marca">País:</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::hidden('ruta.id'); ?>
+                                    <?php echo Form::select('ruta.ppais', Load::model('aeropuerto')->paises(), 'class="form-control" required="required"'); ?>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_ubicacion">Aeropuerto</label>
+                                <div id="aeropuerto" class="col-md-4">
+                                  <?php echo Form::select('ruta.procedencia', array(''=>'--'), 'class="form-control" required="required"'); ?>
+                                </div>
+                            </div>
+
+                            <h4>Destino</h4>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_marca">País:</label>
+                                <div class="col-md-4">
+                                    <?php echo Form::select('ruta.dpais', Load::model('aeropuerto')->paises(), 'class="form-control" required="required"'); ?>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="modelo_ubicacion">Aeropuerto</label>
+                                <div id="aeropuerto" class="col-md-4">
+                                  <?php echo Form::select('ruta.destino', array(''=>'--'), 'class="form-control" required="required"'); ?>
+                                </div>
+                            </div>
+
+                            <span class="label label-info">Automáticamente se creará la ruta de regreso</span>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="crear"></label>
+                                <div class="col-md-8">
+                                    <button id="crear" name="crear" class="btn btn-success"> <i class="fa fa-check"></i> Crear</button>
+                                    <?php echo Html::link(Router::get('controller'), '<i class="fa fa-times"></i> Cancelar', 'class="btn btn-danger"'); ?>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">
+            $('#ruta_ppais').on('change', function(e){
+                var o = $(this).find("option:selected")
+                if ( o.val() != 0 ) {
+                    var t = o.text();
+                    $('#ruta_procedencia').html('');
+                    $.getJSON(
+                        '<?php echo Utils::getLink(Router::get("controller")."/lista/"); ?>'+t,
+                        { type : 'json' },
+                        function(data){
+                            $('#ruta_procedencia').append('<option value="">Seleccione Aeropuerto</option>');
+                            $.each(data, function(i, item){
+                                text = item.codigo+' - '+item.aeropuerto
+                                option = item.codigo+' - '+item.aeropuerto+' ('+item.pais+')';
+                                $('#ruta_procedencia').append('<option value="'+option+'">'+text+'</option>');
+                            });
+                        }
+                    );
+                } else {
+                    $('#ruta_procedencia').html('<option>--</option>');
+                }
+            });
+
+            $('#ruta_dpais').on('change', function(e){
+                var o = $(this).find("option:selected")
+                if ( o.val() != 0 ) {
+                    var t = o.text();
+                    $('#ruta_destino').html('');
+                    $.getJSON(
+                        '<?php echo Utils::getLink(Router::get("controller")."/lista/"); ?>'+t,
+                        { type : 'json' },
+                        function(data){
+                            $('#ruta_destino').append('<option value="">Seleccione Aeropuerto</option>');
+                            $.each(data, function(i, item){
+                                text = item.codigo+' - '+item.aeropuerto
+                                option = item.codigo+' - '+item.aeropuerto+' ('+item.pais+')';
+                                $('#ruta_destino').append('<option value="'+option+'">'+text+'</option>');
+                            });
+                        }
+                    );
+                } else {
+                    $('#ruta_destino').html('<option>--</option>');
+                }
+            });
+            </script>

@@ -1,0 +1,42 @@
+
+<div class="container">
+<?php  echo view::content();?>
+
+<table class="table ">
+<thead>
+	<tr>
+			<th> nombres </th>	
+			<th> apellidos </th>
+			<th> telefono </th>
+			<th> celular </th>
+			<th> fax </th>
+			<th>correo </th>
+			<th> cargo</th>
+	</tr>
+
+</thead>
+	<tbody>
+	<? foreach( $contactos_aerolinea  as $contacto): ?>
+
+		<tr>
+
+				<td> <?php echo $contacto->nombres ?> </td>	
+				<td> <?php echo $contacto->apellidos ?></td>
+				<td> <?php echo $contacto->telefono?> </td>
+				<td> <?php echo $contacto->celular ?></td>
+				<td><?php echo $contacto->fax ?> </td>
+				<td><?php echo $contacto->correo?> </td>
+				<td><?php echo $contacto->cargo?></td>
+
+
+		</tr>
+
+	<? endforeach; ?>
+
+
+	</tbody>
+
+</table>
+
+</div>
+

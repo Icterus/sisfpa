@@ -1,0 +1,96 @@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="aerolinea">Aerolínea</label>
+                              <div class="col-md-6">
+                                <?php echo Form::text('aerolinea.aerolinea', 'class="form-control mask-textonly" placeholder="Aerolínea" required') ?>
+
+                              </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="rif">Rif</label>
+
+                              <div class="col-md-2">
+                              <?php echo Form::hidden('aerolinea.id'); ?>
+                             <?php 
+                                //Argumentos del Tipo de RIF
+                             $arg = array("J" => "J", "G" => "G","V" => "V","E" => "E");
+
+                                echo Form::select('aerolinea.tipo_rif', $arg, 'class="form-control " required') ?>
+                            </div>
+                            <div class="col-md-2">
+                             <?php echo Form::text('aerolinea.rif', 'class="form-control input-md mask-pint" maxlength="8" placeholder="RIF" required') ?>
+                              </div>
+                            <div class="col-md-1">
+                             <?php echo Form::text('aerolinea.terminal_rif', 'class="form-control input-md mask-pint" maxlength="1" required') ?>
+                              </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="telefono">Teléfono Princ</label>
+                              <div class="col-md-4">
+                         <?php echo Form::text('aerolinea.telefono', 'class=" form-control mask-pint input-md"  placeholder="Teléfono Principal" maxlength="10" required') ?>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="telefono_opc">Teléfono Sec</label>
+                              <div class="col-md-4">
+                         <?php echo Form::text('aerolinea.telefono_opc', 'class=" form-control mask-pint input-md" placeholder="Teléfono Secundario" maxlength="10"') ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group"> 
+                                        <label class="col-md-4 control-label" for="aerolinea_fax">FAX</label>  
+                                <div class="col-md-4"> 
+                                  <?php echo Form::text('aerolinea.fax', 'class="form-control  mask-pint input-md" placeholder="Nro de Fax" maxlength="10"') ?>  
+                                 </div>
+                             </div>
+
+
+                            <div class="form-group"> 
+                                     <label class="col-md-4 control-label" for="aerolinea_email">Email</label>  
+                               <div class="col-md-6"> 
+                                   <?php echo Form::email('aerolinea.email', 'class="form-control input-md mask-email" placeholder="Email"') ?>  
+                               </div>  
+                            </div>
+                             
+
+                            <div class="form-group"> 
+                                     <label class="col-md-4 control-label" for="direccion_fiscal">Dirección</label>  
+                                 <div class="col-md-8">
+                                    <?php echo Form::text('aerolinea.direccion_fiscal', 'class="form-control input-md" placeholder="Dirección Fiscal" required') ?>
+                               </div>   
+                            </div>   
+
+
+                         <?php echo Form::hidden('aerolinea.estatus', NULL, 1) ?>
+
+
+        <!-- Boton de Envio de Formulario -->
+
+                          <?php View::partial('botoneranuevo'); ?>
+          
+                        </fieldset>
+
+<?php echo Form::close() ?>
+
+                </div>
+            </div>
+        </div>
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>

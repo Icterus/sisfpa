@@ -1,0 +1,70 @@
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <?php echo Form::open(null, 'post', 'class="form-horizontal"'); ?>
+                        <fieldset>
+                            <legend><?php echo ucfirst(Router::get('action')),' ',ucfirst(Router::get('controller')); ?></legend>
+                            <?php View::content(); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="codigo">Código</label>
+                              <div class="col-md-3">
+                              <?php echo Form::hidden('productos.id'); ?>
+                              <?php echo Form::text('productos.codigo', 'class="form-control mask-prefix upper" placeholder="Código" required') ?>
+
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                     <label class="col-md-4 control-label" for="descripcion">Descripción</label>
+                                 <div class="col-md-8">
+                                    <?php echo Form::text('productos.descripcion', 'class="form-control input-md" placeholder="Descripción" required') ?>
+                               </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="rubro">Rubro</label>
+                              <div class="col-md-3">
+                                <?php echo Form::dbSelect('productos.rubro_id', 'rubro', NULL, 'Seleccione...', 'class="form-control" required="required"'); ?>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="precio">Precio(factor)</label>
+                              <div class="col-md-3">
+                                <div class="input-group">
+                                    <?php echo Form::text('productos.precio', 'class="form-control mask-money" placeholder="Precio" type="text" required="required" maxlength="6"') ?>
+                                  <span class="input-group-addon">* UT</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <?php echo Form::hidden('productos.cantidad', NULL, 0); ?>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="exento">Local o Espacio Publicitario</label>
+                              <div class="col-md-2">
+                              <?php echo Form::check('productos.mora','1') ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-4 control-label" for="exento">Exento</label>
+                              <div class="col-md-2">
+                              <?php echo Form::check('productos.exento','1') ?>
+                              </div>
+                            </div>
+        <!-- Boton de Envio de Formulario -->
+
+                          <?php View::partial('botoneranuevo'); ?>
+
+                        </fieldset>
+
+<?php echo Form::close() ?>
+
+                </div>
+            </div>
+        </div>
+        <?php echo Tag::js('jquery.keyfilter'); ?>
+        <?php echo Tag::js('utils'); ?>

@@ -1,0 +1,128 @@
+        <div class="text-center">
+            <ul class="pagination">
+            </ul>
+        </div>
+        <!-- Paginación -->
+        <?php echo Tag::js('jquery.tmpl.min'); ?>
+        <script type="application/javascript">
+            $(function(){
+                var pagina_actual = 1;
+                cargarDatos();
+
+                $('#buscador').hide();
+                function cargarDatos(){
+                    <?php if($buscar):  // Si tiene buscar ?>
+                    var data = $('form').serialize();
+                    data += "&type=json";  // convertir JSON la respuesta del FW
+                    <?php else: ?>
+                    var data = "type=json";  // convertir JSON la respuesta del FW
+                    <?php endif; ?>
+                    $('table > tbody').html('<tr><td colspan="<?php echo $campos; ?>" class="text-center"><i class="fa fa-spinner fa-spin fa-2x"></i> Por favor espere...</td></tr>');
+                    $.getJSON(
+                        '<?php echo $ruta; ?>paginar/'+pagina_actual,
+                        data,
+                        function(data){
+                            if( data.count > 0 ) {
+                                var paginas = Math.ceil(data.count / data.per_page);
+                                var pagina = '';
+                                var pag = 1;
+                                if (data.prev){
+                                    pagina += '<li><a href="#" data-pagina="' + (pagina_actual-1) + '">&laquo;</a></li>';
+                                }
+                                while (pag <= paginas && paginas > 1) {
+                                    if (pag == pagina_actual) {
+                                        pagina += '<li class="active">';
+                                    } else {
+                                        pagina += '<li>';
+                                    }
+                                    pagina += '<a href="#" data-pagina="' + pag + '">' + pag + '</a></li>';
+
+                                    pag++;
+                                }
+                                if (data.next && paginas != 0){
+                                    pagina += '<li><a href="#" data-pagina="' + (pagina_actual+1) + '">&raquo;</a></li>';
+                                }
+                                $('.pagination').html(pagina);
+                                $('table > tbody').html('');
+                                $('#items').tmpl(data.items).appendTo('table > tbody');
+                            } else {
+                                $('table > tbody').html('<tr><td colspan="6" class="text-center">No hay registros</td></tr>');
+                                $('.pagination').html('');
+                            }
+                        }
+                    ).fail(function(error){
+                        if (error.status == 403){
+                            console.log('Saliendo...');
+                            location.href="<?php echo Utils::getLink('salir/'); ?>";
+                        } else {
+                            $('table').before('<div class="alert alert-error alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> <i class="fa fa-times"></i> </button> Error Interno contacte a soporte</div>');
+                        }
+                    });
+                }
+
+                $('.pagination').on('click', 'a', function(e){
+                    e.preventDefault();
+                    pagina_actual = $(this).data('pagina');
+                    cargarDatos();
+                });
+
+                $('#refrescar').on('click', function(e){
+                    e.preventDefault();
+                    location.reload();
+                });
+
+
+                <?php if($buscar):  // Si tiene buscar ?>
+                $('#buscar').on('click', function(e){
+                    e.preventDefault();
+                    $(this).hide();
+                    $('#buscador').show('slow');
+                });
+
+                $('#reset').on('click', function(e){
+                    e.preventDefault();
+                    $('#buscar').show();
+                    $('#buscador').hide('slow');
+                });
+
+                $('#buscando').on('click', function(e){
+                    e.preventDefault();
+                    $('#buscar').show();
+                    $('#buscador').hide('slow');
+                    cargarDatos();
+                });
+                <?php endif; ?>
+
+
+                <?php if($borrar): ?>
+                // Borrar
+                $('table').on('click', '.btn-danger', function(e){
+                    e.preventDefault();
+                    var href = $(this).attr('href');
+                    $.getJSON(
+                        href,
+                        {
+                            type: 'json'
+                        },
+                        function(data){
+                            $('.alert').remove();
+                            $('table').before('<div class="alert alert-'+ data.status +' alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> <i class="fa fa-times"></i> </button>'+ data.message +'</div>');
+                            if ( data.status == 'success' ){
+                                cargarDatos();
+                            }
+                        }
+                    ).fail(function(error){
+                        if (error.status == 403){
+                            console.log('Saliendo...');
+                            location.href="<?php echo Utils::getLink('salir/'); ?>";
+                        } else {
+                            $('.alert').remove();
+                            $('table').before('<div class="alert alert-error alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> <i class="fa fa-times"></i> </button> Error Interno contacte a soporte</div>');
+                        }
+                    });
+                });
+                <?php endif; ?>
+            });
+        </script>
+        <!-- Paginación -->
+

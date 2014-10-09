@@ -1,0 +1,9 @@
+<?php echo Tag::css('datepicker'); ?>
+<?php echo Tag::js('bootstrap-datepicker'); ?>
+<?php echo Tag::js('bootstrap-datepicker.es'); ?>
+<script type="text/javascript">
+    $('.datepicker').datepicker({language: 'es'})
+    .on('changeDate', function(ev) {
+        $(this).datepicker('hide');
+    });
+</script>
